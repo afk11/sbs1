@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Afk11\Sbs1;
+namespace Afk11\Sbs1\MessageType;
 
 class MessageTypeRegistry
 {

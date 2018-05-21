@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Afk11\Sbs1;
+namespace Afk11\Sbs1\Message;
 
-abstract class BasestationLine
+use Afk11\Sbs1\MessageType\MessageType;
+use Afk11\Sbs1\TransmissionType\TransmissionType;
+
+abstract class Message
 {
     /**
      * @var MessageType

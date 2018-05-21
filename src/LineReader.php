@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Afk11\Sbs1;
 
+use Afk11\Sbs1\Message\Message;
+use Afk11\Sbs1\Message\MutableMessage;
+use Afk11\Sbs1\MessageType\MessageType;
+use Afk11\Sbs1\MessageType\MessageTypeRegistry;
+use Afk11\Sbs1\TransmissionType\TransmissionType;
+use Afk11\Sbs1\TransmissionType\TransmissionTypeRegistry;
+
 class LineReader
 {
     /**
@@ -16,11 +23,6 @@ class LineReader
      */
     private $transmissionTypeRegistry;
 
-    /**
-     * LineReader constructor.
-     * @param MessageTypeRegistry $messageTypeRegistry
-     * @param TransmissionTypeRegistry $transmissionTypeRegistry
-     */
     public function __construct(
         MessageTypeRegistry $messageTypeRegistry,
         TransmissionTypeRegistry $transmissionTypeRegistry
@@ -29,34 +31,42 @@ class LineReader
         $this->transmissionTypeRegistry = $transmissionTypeRegistry;
     }
 
-    public function read(string $line): BasestationLine
+    public function read(string $line): Message
     {
-        $mutableLine = new MutableBasestationLine();
+        $mutableLine = new MutableMessage();
         $elements = explode(",", $line);
         if ($elements[0] !== "") {
             $mutableLine->setMessageTypeFromString($this->messageTypeRegistry, strtoupper($elements[0]));
         }
+
         if ($elements[1] !== "") {
             $mutableLine->setTransmissionType($this->transmissionTypeRegistry, (int) $elements[1]);
         }
+
         if ($elements[2] !== "" && $elements[2] !== "111") {
             $mutableLine->setSessionId((int) $elements[2]);
         }
+
         if ($elements[3] !== "" && $elements[3] !== "11111") {
             $mutableLine->setAircraftId((int)$elements[3]);
         }
+
         if ($elements[4] !== "") {
             $mutableLine->setHexIdent(strtoupper($elements[4]));
         }
+
         if ($elements[5] && $elements[5] !== "111111") {
             $mutableLine->setFlightId(strtoupper($elements[5]));
         }
+
         if (strlen($elements[6]) > 0 && $elements[7] !== "") {
             $mutableLine->setGenerationTime($elements[6], $elements[7]);
         }
+
         if (strlen($elements[8]) > 0 && $elements[9] !== "") {
             $mutableLine->setRecordTime($elements[8], $elements[9]);
         }
+
         if (count($elements) > 10 && $elements[10] !== "") {
             $mutableLine->setCallsign($elements[10]);
         }
@@ -70,7 +80,7 @@ class LineReader
                 if ($elements[20]) {
                     $mutableLine->setOnGround(Helper::parseBool($elements[20]));
                 }
-                return $mutableLine->immutable();
+                return $mutableLine->makeImmutable();
             }
 
             if ($elements[12] !== "") {
@@ -114,6 +124,6 @@ class LineReader
             }
         }
 
-        return $mutableLine->immutable();
+        return $mutableLine->makeImmutable();
     }
 }

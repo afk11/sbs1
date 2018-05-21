@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Afk11\Sbs1;
+namespace Afk11\Sbs1\TransmissionType;
+
+use Afk11\Sbs1\TransmissionType\TransmissionType;
+use Afk11\Sbs1\TransmissionType\TransmissionTypeRegistry;
+use Afk11\Sbs1\TransmissionType\TransmissionTypeRegistryFactoryInterface;
 
 class TransmissionTypeRegistryFactory implements TransmissionTypeRegistryFactoryInterface
 {
