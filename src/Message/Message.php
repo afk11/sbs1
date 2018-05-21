@@ -35,7 +35,7 @@ abstract class Message
     protected $hexIdent;
 
     /**
-     * @var int
+     * @var string
      */
     protected $flightId;
 
@@ -50,61 +50,85 @@ abstract class Message
     protected $recordTime;
 
     /**
+     * An eight digit flight ID - can be flight number or registration (or even nothing).
+     *
      * @var string|null
      */
     protected $callsign;
 
     /**
+     * Mode C altitude. Height relative to 1013.2mb (Flight Level). Not height AMSL..
+     *
      * @var int|null
      */
     protected $altitude;
 
     /**
+     * Speed over ground (not indicated airspeed)
+     *
      * @var float|null
      */
     protected $groundSpeed;
 
     /**
+     * Track of aircraft (not heading). Derived from the velocity E/W and velocity N/S
+     *
      * @var float|null
      */
     protected $track;
 
     /**
+     * North and East positive. South and West negative.
+     *
      * @var float|null
      */
     protected $latitude;
 
     /**
+     * North and East positive. South and West negative.
+     *
      * @var float|null
      */
     protected $longitude;
 
     /**
+     * 64ft resolution
+     *
      * @var int|null
      */
     protected $verticalRate;
 
     /**
+     * Assigned Mode A squawk code.
+     *
      * @var string|null
      */
     protected $squawk;
 
     /**
+     * Flag to indicate squawk has changed.
+     *
      * @var bool|null
      */
     protected $squawkAlert;
 
     /**
+     * Flag to indicate emergency code has been set
+     *
      * @var bool|null
      */
     protected $emergency;
 
     /**
+     * Flag to indicate transponder Ident has been activated.
+     *
      * @var bool|null
      */
     protected $spi;
 
     /**
+     * Flag to indicate ground squat switch is active
+     *
      * @var bool|null
      */
     protected $onGround;
@@ -142,17 +166,18 @@ abstract class Message
     }
 
     /**
-     * @return string
+     * can be null in CLK message
+     * @return string|null
      */
-    public function getHexIdent(): string
+    public function getHexIdent()
     {
         return $this->hexIdent;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getFlightId(): int
+    public function getFlightId(): string
     {
         return $this->flightId;
     }
@@ -240,7 +265,7 @@ abstract class Message
     /**
      * @return bool|null
      */
-    public function getSquawkAlert()
+    public function isSquawkAlert()
     {
         return $this->squawkAlert;
     }

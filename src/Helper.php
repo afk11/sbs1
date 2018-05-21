@@ -22,24 +22,15 @@ class Helper
 
     public static function formatTime(\DateTimeInterface $dateTime): string
     {
-        return $dateTime->format("H:m:s") . sprintf(".%3d", $dateTime->format("v"));
+        return $dateTime->format("H:i:s") . sprintf(".%03d", $dateTime->format("v"));
     }
 
     public static function parseBool(string $value)
     {
         switch (strtolower($value)) {
-            case 'true':
-            case 'y':
-            case 'yes':
-            case 'on':
-            case '1':
-                return true;
-            case 'false':
-            case 'n':
-            case 'no':
-            case 'off':
-            case '0':
             case '-1':
+                return true;
+            case '0':
                 return false;
         }
         return null;

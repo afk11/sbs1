@@ -34,15 +34,7 @@ class HelperTest extends TestCase
     public function getParseBoolFixtures(): array
     {
         return [
-            ['true', true],
-            ['y', true],
-            ['yes', true],
-            ['on', true],
-            ['1', true],
-            ['false', false],
-            ['n', false],
-            ['no', false],
-            ['off', false],
+            ['-1', true],
             ['0', false],
         ];
     }

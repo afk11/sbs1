@@ -100,7 +100,7 @@ class LineReader
             }
 
             if ($elements[16] !== "") {
-                $mutableLine->setVerticalRate((int) $elements[16]);
+                $mutableLine->setVerticalRate((float) $elements[16]);
             }
 
             if ($elements[17] !== "") {
