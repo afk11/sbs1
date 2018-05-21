@@ -1,6 +1,6 @@
 {
-    "name": "afk11/dump1090",
-    "description": "Dump1090 event stream",
+    "name": "afk11/sbs1",
+    "description": "SBS1 packet decoder",
     "type": "library",
     "license": "MIT",
     "require": {
