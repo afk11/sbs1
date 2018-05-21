@@ -39,6 +39,7 @@ class Helper
             case 'no':
             case 'off':
             case '0':
+            case '-1':
                 return false;
         }
         return null;
