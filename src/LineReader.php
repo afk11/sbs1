@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Afk11\Sbs1;
 
+use Afk11\Sbs1\Exception\InvalidMessageException;
 use Afk11\Sbs1\Message\Message;
 use Afk11\Sbs1\Message\MutableMessage;
 use Afk11\Sbs1\MessageType\MessageType;
@@ -31,9 +32,8 @@ class LineReader
         $this->transmissionTypeRegistry = $transmissionTypeRegistry;
     }
 
-    public function read(string $line): Message
+    private function readFromLine(MutableMessage $mutableLine, string $line)
     {
-        $mutableLine = new MutableMessage();
         $elements = explode(",", $line);
         if ($elements[0] !== "") {
             $mutableLine->setMessageTypeFromString($this->messageTypeRegistry, strtoupper($elements[0]));
@@ -123,7 +123,16 @@ class LineReader
                 $mutableLine->setOnGround(Helper::parseBool($elements[21]));
             }
         }
+    }
 
+    public function read(string $line): Message
+    {
+        $mutableLine = new MutableMessage();
+        try {
+            $this->readFromLine($mutableLine, $line);
+        } catch (\Exception $e) {
+            throw new InvalidMessageException("Unable to read line: [$line]", 0, $e);
+        }
         return $mutableLine->makeImmutable();
     }
 }
